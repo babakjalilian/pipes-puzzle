@@ -50,8 +50,6 @@
   </ol>
 </details>
 
-<!-- ABOUT THE PROJECT -->
-
 ## About the Project
 
 [![Product Name Screen Shot][product-screenshot]](https://github.com/babakjalilian/Read_Me_Test/blob/main/public/pipe-puzzle-cover.png)
