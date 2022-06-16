@@ -1,0 +1,30 @@
+// breakpoints
+$breakpoint_min: 20rem; // 320px
+$breakpoint_tablet: 48rem; // 768px
+$breakpoint_laptop: 75rem; // 1200px
+$breakpoint_max: 240rem; // 3840px
+
+// colors
+$color_black: #000;
+$color_white: #fff;
+$color_dark: #1e1e1e;
+$color_theme_dark: #2b3b42;
+$color_theme_dark_green: #013220;
+$color_theme_gold: #b8860b;
+$color_theme_green: #00e089;
+$color_theme_red: #ff5549;
+$color_theme_yellow: #ff9801;
+
+// transitions
+$transition_background: background 0.25s ease-in-out;
+$transition_color: color 0.25s ease-in-out;
+$transition_border: border 0.1s ease-in-out;
+
+// typography
+$font_family_base: 'Nunito', sans-serif;
+$font_size_base: 0.9rem;
+$font_lineheight_base: 1.3;
+$font_weight_base: 400;
+
+// mixins
+@import 'mixins';
