@@ -71,7 +71,7 @@ const messages = {
     gameFinishedMessage: 'We never thought anyone would see this! You made the impossible possible! ',
     welcomeTitle: 'Welcome!',
     welcomeDescription: 'The goal of the puzzle is to rotate the tiles on the map to make all pipes connected in a single group, with no loops and no dangling pipes. Click a tile with the mouse to rotate it.\n Choose a level to start.',
-    copyright: 'All rights reservedd.',
+    copyright: 'All rights reserved.',
   },
   levelDescriptions: {
     level_1: '(8x8) A Cute Welcome',
