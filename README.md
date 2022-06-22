@@ -138,7 +138,7 @@ Due to the heavy load and high number of cells in levels 5 and 6, the UX is not 
 
 - To reduce server calls and, hence, optimize server load, rotations are handled on the client side as queues. Every 50 rotation (50 is adjustable to any number in the code), the rotations are synced with the server under a single request in the background and without involving the user or disturbing the flow of the game.
 
-The other advantage is that in higher levels where the server takes a bit longer to respond, the user faces no lagging in rotations and doesn’t have to wait after each rotation they make to a cell.
+  The other advantage is that in higher levels where the server takes a bit longer to respond, the user faces no lagging in rotations and doesn’t have to wait after each rotation they make to a cell.
 
 - The queued rotations are analyzed before syncing with the server and if one cell is rotated 4 times, which means it is back to its start position, its rotations are deleted. This further optimizes the requests sent to the server.
 
