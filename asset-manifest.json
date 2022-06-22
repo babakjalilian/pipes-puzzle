@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/pipes-puzzle/static/css/main.68a32e84.chunk.css",
-    "main.js": "/pipes-puzzle/static/js/main.883104bc.chunk.js",
-    "main.js.map": "/pipes-puzzle/static/js/main.883104bc.chunk.js.map",
+    "main.css": "/pipes-puzzle/static/css/main.a3287212.chunk.css",
+    "main.js": "/pipes-puzzle/static/js/main.dde1643e.chunk.js",
+    "main.js.map": "/pipes-puzzle/static/js/main.dde1643e.chunk.js.map",
     "runtime-main.js": "/pipes-puzzle/static/js/runtime-main.7c126a3a.js",
     "runtime-main.js.map": "/pipes-puzzle/static/js/runtime-main.7c126a3a.js.map",
     "static/js/2.1dfce016.chunk.js": "/pipes-puzzle/static/js/2.1dfce016.chunk.js",
     "static/js/2.1dfce016.chunk.js.map": "/pipes-puzzle/static/js/2.1dfce016.chunk.js.map",
     "index.html": "/pipes-puzzle/index.html",
-    "static/css/main.68a32e84.chunk.css.map": "/pipes-puzzle/static/css/main.68a32e84.chunk.css.map",
+    "static/css/main.a3287212.chunk.css.map": "/pipes-puzzle/static/css/main.a3287212.chunk.css.map",
     "static/js/2.1dfce016.chunk.js.LICENSE.txt": "/pipes-puzzle/static/js/2.1dfce016.chunk.js.LICENSE.txt",
     "static/media/Layout.scss": "/pipes-puzzle/static/media/background.395f7820.png"
   },
   "entrypoints": [
     "static/js/runtime-main.7c126a3a.js",
     "static/js/2.1dfce016.chunk.js",
-    "static/css/main.68a32e84.chunk.css",
-    "static/js/main.883104bc.chunk.js"
+    "static/css/main.a3287212.chunk.css",
+    "static/js/main.dde1643e.chunk.js"
   ]
 }
