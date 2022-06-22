@@ -43,7 +43,7 @@ const constants: IConstants = {
     responseGameOver: 'verify: Only 10',
     remainingVerifyAttemptCount: 12,
     maxLevel: 6,
-    syncRotationsWithServerLimit:10,
+    syncRotationsWithServerLimit:50,
   },
   localStorageKeyPrefix: 'puzzle-password-level_',
   localStorageKeys: {
