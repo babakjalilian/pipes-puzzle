@@ -25,7 +25,7 @@ describe('Helper functions should be work as expected.', () => {
   describe('rotateCell()', () => {
     it('"rotateCell" function should return a 90 degree rotated shape as a String:', () => {
 
-      let shapeList = ['┗','┏','┓','┛','━','┃','┫','┻','┣','┳','╺','╻','╸','╹','╋']
+      let shapeList = ['┗','┏','┓','┛','━','┃','┫','┻','┣','┳','╺','╻','╸','╹','╋'];
 
 
       shapeList=shapeList.map(shape=>rotateCell(shape));
@@ -42,25 +42,25 @@ describe('Helper functions should be work as expected.', () => {
   describe('updateRotationQueue()', () => {
     it('"rotateCell" function should return a 90 degree rotated shape as a String:', () => {
 
-      let rotationCoordinate1='0 0';
-      let rotationQueue1={'0 0': '\n0 0'};
+      const rotationCoordinate1='0 0';
+      const rotationQueue1={'0 0': '\n0 0'};
       updateRotationQueue(rotationCoordinate1, rotationQueue1);
-      let rotatioQueue1Pattern=JSON.stringify(rotationQueue1);
-      let rotationQueue1Expectation=JSON.stringify({'0 0': '\n0 0\n0 0'});
+      const rotatioQueue1Pattern=JSON.stringify(rotationQueue1);
+      const rotationQueue1Expectation=JSON.stringify({'0 0': '\n0 0\n0 0'});
       expect(rotatioQueue1Pattern).toBe(rotationQueue1Expectation);
       
-      let rotationCoordinate2='1 1';
-      let rotationQueue2={'0 0': '\n0 0'};
+      const rotationCoordinate2='1 1';
+      const rotationQueue2={'0 0': '\n0 0'};
       updateRotationQueue(rotationCoordinate2, rotationQueue2);
-      let rotatioQueue2Pattern=JSON.stringify(rotationQueue2);
-      let rotationQueue2Expectation=JSON.stringify({'0 0': '\n0 0', '1 1':'\n1 1'});
+      const rotatioQueue2Pattern=JSON.stringify(rotationQueue2);
+      const rotationQueue2Expectation=JSON.stringify({'0 0': '\n0 0', '1 1':'\n1 1'});
       expect(rotatioQueue2Pattern).toBe(rotationQueue2Expectation);
       
-      let rotationCoordinate3='0 0';
-      let rotationQueue3={'0 0': '\n0 0\n0 0\n0 0', '1 1':'\n1 1'};
+      const rotationCoordinate3='0 0';
+      const rotationQueue3={'0 0': '\n0 0\n0 0\n0 0', '1 1':'\n1 1'};
       updateRotationQueue(rotationCoordinate3, rotationQueue3);
-      let rotatioQueue3Pattern=JSON.stringify(rotationQueue3);
-      let rotationQueue3Expectation=JSON.stringify({'1 1':'\n1 1'});
+      const rotatioQueue3Pattern=JSON.stringify(rotationQueue3);
+      const rotationQueue3Expectation=JSON.stringify({'1 1':'\n1 1'});
       expect(rotatioQueue3Pattern).toBe(rotationQueue3Expectation);
       
 
