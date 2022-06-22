@@ -10,7 +10,6 @@ interface ICreateNewSocketAndPuzzle {
 }
 
 interface IRotatePuzzle {
-  webSocket: WebSocket;
   cellX: number;
   cellY: number;
 }
@@ -23,6 +22,7 @@ interface IVerifyPuzzle {
 
 class Socket {
 
+  rotations:{[key:string]:string}={};
   private static instance: Socket;
   constructor(webSocketUrl?: string) {
     this._webSocketUrl = webSocketUrl || this._webSocketUrl;
@@ -81,7 +81,7 @@ class Socket {
       if (!mapResponse?.startsWith(constants.api.responseMapSuccess)) {
         throw new Error();
       }
-
+      this.rotations={};
       const puzzleData = createPuzzleDataFromMessage(mapResponse);
       const puzzleDataDimension = [puzzleData.length, puzzleData[0].length];
       return {
@@ -94,23 +94,16 @@ class Socket {
     }
   };
 
-  rotatePuzzleCellAsync = async ({ webSocket, cellX, cellY }: IRotatePuzzle): Promise<TPuzzleData | null> => {
+  rotatePuzzleCellsOnServer = async (webSocket : WebSocket, rotationQueue:string): Promise<string | null> => {
     try {
-      webSocket.send(`${constants.api.requestRotate} ${cellX} ${cellY}`);
+      webSocket.send(`${constants.api.requestRotate}${rotationQueue}`);
       let response = await this.onRecieveMessageAsync(webSocket);
       while (!response?.startsWith(constants.api.responseRotateSuccess)) {
         response = await this.onRecieveMessageAsync(webSocket);
       }
-
-      webSocket.send(constants.api.requestMap);
-      let rotateIsMap = await this.onRecieveMessageAsync(webSocket);
-      while (!rotateIsMap?.startsWith(constants.api.responseMapSuccess)) {
-        rotateIsMap = await this.onRecieveMessageAsync(webSocket);
-      }
-
-      const puzzleData = createPuzzleDataFromMessage(rotateIsMap);
-      return puzzleData;
-
+      
+      this.rotations={};
+      return response;
     } catch (error) {
       return null;
     }
@@ -118,6 +111,10 @@ class Socket {
 
   verifyPuzzleAsync = async (webSocket: WebSocket, puzzleLevel: number): Promise<IVerifyPuzzle | null> => {
     try {
+      if(Object.keys(this.rotations).length > 0) {
+        const rotationQueue= Object.values(this.rotations).join('');
+        await this.rotatePuzzleCellsOnServer(webSocket, rotationQueue);
+      }
       webSocket.send(constants.api.requestVerify);
       const isVerified = await this.onRecieveMessageAsync(webSocket);
 
@@ -209,5 +206,7 @@ export type {
   ICreateNewSocketAndPuzzle,
   IRotatePuzzle,
 };
-
 export { Socket };
+
+
+

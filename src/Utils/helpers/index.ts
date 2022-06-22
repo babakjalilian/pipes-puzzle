@@ -12,8 +12,62 @@ const setStorageItem = (key: string, value: string): void => {
   window.localStorage.setItem(key, value);
 };
 
+const rotateCell = (shape: string): string => {
+  switch (shape) {
+  case '┗':
+    return '┏';
+  case '┏':
+    return '┓';
+  case '┓':
+    return '┛';
+  case '┛':
+    return '┗';
+  case '┃':
+    return '━';
+  case '━':
+    return '┃';
+  case '┳':
+    return '┫';
+  case '┫':
+    return '┻';
+  case '┻':
+    return '┣';
+  case '┣':
+    return '┳';
+  case '╹':
+    return '╺';
+  case '╺':
+    return '╻';
+  case '╻':
+    return '╸';
+  case '╸':
+    return '╹';
+  case '╋':
+    return '╋';
+  default:
+    return '╋';
+  }
+};
+
+const updateRotationQueue=(rotationCoordinate:string,rotationQueue:{ [key: string]: string; }) : { [key: string]: string; }=>{
+  if(rotationQueue[rotationCoordinate]) {
+    rotationQueue[rotationCoordinate] = rotationQueue[rotationCoordinate].concat(`${rotationCoordinate}`);
+  } else {
+    rotationQueue[rotationCoordinate]=`${rotationCoordinate}`;
+  }
+
+  const numberOfRotations=rotationQueue[rotationCoordinate].trim().split(' ').length / 2;
+  if(numberOfRotations===4) {
+    delete rotationQueue[rotationCoordinate];
+  }
+  return rotationQueue;
+};
+
 export {
   createPuzzleDataFromMessage,
   getStorageItem,
   setStorageItem,
+  rotateCell,
+  updateRotationQueue
 };
+

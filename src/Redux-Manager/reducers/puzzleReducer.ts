@@ -1,6 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { IReduxState } from 'Redux-Manager/interfaces/puzzle.Interface';
 import { constants } from 'Utils/constants';
+import { rotateCell } from 'Utils/helpers';
 import { puzzleCreated, puzzleDecreaseValidationAttempt, puzzleFailed, puzzleGameOver, puzzleLoading, puzzleNextLevelAvailability, puzzleNextLevelCreated, puzzleReturned, puzzleStarted, puzzleUpdated } from '../actions/puzzleActions';
 
 
@@ -44,7 +45,9 @@ const puzzleReducer = createReducer(puzzleInitialState, (builder) => {
       state.puzzleWebSocket = action.payload.webSocket;
     })
     .addCase(puzzleUpdated, (state, action) => {
-      state.puzzleData = action.payload;
+      if(state.puzzleData){
+        state.puzzleData[action.payload.cellY][action.payload.cellX] = rotateCell(state.puzzleData[action.payload.cellY][action.payload.cellX]);
+      }
     })
     .addCase(puzzleDecreaseValidationAttempt, (state,) => {
       state.puzzleRemainingValidationAttempt = (state.puzzleRemainingValidationAttempt - 1);

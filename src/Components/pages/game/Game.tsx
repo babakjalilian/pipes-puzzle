@@ -1,17 +1,17 @@
-import { useLayoutEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-
-import GameLoading from 'Components/pages/game/partials/Loading';
+import 'Components/pages/game/Game.scss';
+import GameActions from 'Components/pages/game/partials/Actions';
 import GameError from 'Components/pages/game/partials/Error';
 import GameOver from 'Components/pages/game/partials/GameOver';
-import GameActions from 'Components/pages/game/partials/Actions';
+import GameLoading from 'Components/pages/game/partials/Loading';
 import GameNextLevel from 'Components/pages/game/partials/NextLevel';
 import PuzzleBody from 'Components/pages/game/partials/PuzzleBody';
-
-import 'Components/pages/game/Game.scss';
+import { useLayoutEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { rdxCreateWebSocketAndPuzzleAsync } from 'Redux-Manager/actions/puzzleActions';
 import { IReduxState } from 'Redux-Manager/interfaces/puzzle.Interface';
+
+
+
 
 function Game(): JSX.Element {
   const dispatch = useDispatch();

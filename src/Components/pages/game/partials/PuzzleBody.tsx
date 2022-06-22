@@ -2,8 +2,10 @@ import { CSSProperties, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { List } from 'react-virtualized';
 import { IReduxState } from 'Redux-Manager';
-import { rdxrotatePuzzleCellAsync } from 'Redux-Manager/actions/puzzleActions';
+import { rdxRotatePuzzleCellOnClient, rdxRotatePuzzleCellsOnServer } from 'Redux-Manager/actions/puzzleActions';
+import { Socket } from 'Services/Socket';
 import { constants } from 'Utils/constants';
+import { updateRotationQueue } from 'Utils/helpers';
 import PuzzleRow from './PuzzleRow';
 
 
@@ -14,7 +16,7 @@ function PuzzleBody(): JSX.Element {
   const puzzleDataDimension = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleDataDimension);
   const puzzleRemainingValidationAttempt = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleRemainingValidationAttempt);
   const [stateBounceClassName, setStateBounceClassName] = useState<string>('');
-
+  const socketInstance:Socket= new Socket();
   useEffect(() => {
     if(puzzleRemainingValidationAttempt !== constants.api.remainingVerifyAttemptCount){
       setStateBounceClassName(' puzzle-bounce');
@@ -32,12 +34,14 @@ function PuzzleBody(): JSX.Element {
     );
   };
 
-  const buttonRotateHandler=(event:React. MouseEvent<HTMLElement>)=>{
+  const buttonRotateHandler= (event:React. MouseEvent<HTMLElement>)=>{
     const target = event.target as HTMLTextAreaElement;
     if(target.className==='puzzle-cell'){
       const [cellY,cellX]=target.id.split('_');
       if (puzzleWebSocket) {
-        dispatch(rdxrotatePuzzleCellAsync({ webSocket: puzzleWebSocket, cellX: +cellX, cellY: +cellY }));
+        dispatch(rdxRotatePuzzleCellOnClient({ cellX: +cellX, cellY: +cellY }));
+        updateRotationQueue(` ${cellX} ${cellY}` , socketInstance.rotations);
+        dispatch(rdxRotatePuzzleCellsOnServer(puzzleWebSocket,socketInstance.rotations));
       }
     }
   };

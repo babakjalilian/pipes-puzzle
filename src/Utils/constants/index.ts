@@ -13,6 +13,7 @@ interface IConstants {
     responsePassword: string;
     responseGameOver: string;
     remainingVerifyAttemptCount: number;
+    syncRotationsWithServerLimit:number;
     maxLevel: number;
   };
   localStorageKeyPrefix: string;
@@ -42,6 +43,7 @@ const constants: IConstants = {
     responseGameOver: 'verify: Only 10',
     remainingVerifyAttemptCount: 12,
     maxLevel: 6,
+    syncRotationsWithServerLimit:10,
   },
   localStorageKeyPrefix: 'puzzle-password-level_',
   localStorageKeys: {
