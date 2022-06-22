@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { FiAlertCircle as IconFailure, FiCornerUpLeft as IconReturn } from 'react-icons/fi';
-
-import { messages } from 'Utils/constants';
+import { useDispatch, useSelector } from 'react-redux';
 import { rdxReturnToWelcomeAsync } from 'Redux-Manager/actions/puzzleActions';
 import { IReduxState } from 'Redux-Manager/interfaces/puzzle.Interface';
+import { messages } from 'Utils/constants';
 
-function GameError(): JSX.Element {
+
+function PuzzleError(): JSX.Element {
   const dispatch = useDispatch();
   const puzzleWebSocket = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleWebSocket);
 
@@ -25,4 +25,4 @@ function GameError(): JSX.Element {
   );
 }
 
-export default GameError;
+export default PuzzleError;

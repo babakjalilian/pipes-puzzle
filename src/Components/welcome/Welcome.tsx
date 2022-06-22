@@ -1,4 +1,4 @@
-import 'Components/pages/welcome/Welcome.scss';
+import 'Components/welcome/Welcome.scss';
 import { FcKey } from 'react-icons/fc';
 import { FiHelpCircle as IconPassword } from 'react-icons/fi';
 import { HiLockClosed as IconLock } from 'react-icons/hi';

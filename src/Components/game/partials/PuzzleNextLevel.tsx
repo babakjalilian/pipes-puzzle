@@ -1,11 +1,11 @@
+import { FiArrowRightCircle as IconNextLevel, FiCornerUpLeft as IconReturn, FiGift as IconWellDone } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { FiGift as IconWellDone, FiArrowRightCircle as IconNextLevel, FiCornerUpLeft as IconReturn } from 'react-icons/fi';
-
-import { constants, messages } from 'Utils/constants';
-import { rdxReturnToWelcomeAsync, rdxgoToNextLevelAsync } from 'Redux-Manager/actions/puzzleActions';
+import { rdxgoToNextLevelAsync, rdxReturnToWelcomeAsync } from 'Redux-Manager/actions/puzzleActions';
 import { IReduxState } from 'Redux-Manager/interfaces/puzzle.Interface';
+import { constants, messages } from 'Utils/constants';
 
-function GameNextLevel(): JSX.Element {
+
+function PuzzleNextLevel(): JSX.Element {
   const dispatch = useDispatch();
   const puzzleWebSocket = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleWebSocket);
   const puzzleLevelPassword = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleLevelPassword);
@@ -49,4 +49,4 @@ function GameNextLevel(): JSX.Element {
   );
 }
 
-export default GameNextLevel;
+export default PuzzleNextLevel;

@@ -1,10 +1,10 @@
-import 'Components/pages/game/Game.scss';
-import GameActions from 'Components/pages/game/partials/Actions';
-import GameError from 'Components/pages/game/partials/Error';
-import GameOver from 'Components/pages/game/partials/GameOver';
-import GameLoading from 'Components/pages/game/partials/Loading';
-import GameNextLevel from 'Components/pages/game/partials/NextLevel';
-import PuzzleBody from 'Components/pages/game/partials/PuzzleBody';
+import 'Components/game/Game.scss';
+import GameOver from 'Components/game/partials/GameOver';
+import PuzzleActions from 'Components/game/partials/PuzzleActions';
+import PuzzleBody from 'Components/game/partials/PuzzleBody';
+import PuzzleError from 'Components/game/partials/PuzzleError';
+import PuzzleLoading from 'Components/game/partials/PuzzleLoading';
+import PuzzleNextLevel from 'Components/game/partials/PuzzleNextLevel';
 import { useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { rdxCreateWebSocketAndPuzzleAsync } from 'Redux-Manager/actions/puzzleActions';
@@ -31,18 +31,18 @@ function Game(): JSX.Element {
 
 
   if (puzzleIsLoading) {
-    return <GameLoading />;
+    return <PuzzleLoading />;
   }
 
   if (puzzleIsError) {
-    return <GameError />;
+    return <PuzzleError />;
   }
 
   return (
     <div className={`puzzle ${puzzleIsNextLevelAvailable ? 'puzzle-success' : ''} ${puzzleIsOver ? 'puzzle-failed' : ''}`}>
       {puzzleIsOver && <GameOver />}
-      {(!puzzleIsOver && !puzzleIsNextLevelAvailable) && <GameActions />}
-      {puzzleIsNextLevelAvailable && <GameNextLevel />}
+      {(!puzzleIsOver && !puzzleIsNextLevelAvailable) && <PuzzleActions />}
+      {puzzleIsNextLevelAvailable && <PuzzleNextLevel />}
       <PuzzleBody />
     </div>
   );
