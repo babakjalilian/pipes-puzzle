@@ -136,7 +136,10 @@ Due to the heavy load and high number of cells in levels 5 and 6, the UX is not 
 
 - In levels 5 and 6, with high number of cells, some performance and rendering issues emerged. They were optimized using React Virtualized Package.
 
-- as the API returns the whole map on every rotation, I managed states on the client side in a way that only the rotated cell is re-rendered, not the whole puzzle. This is specifically effective in puzzles with higher numbers of cells.
+- To reduce server calls and, hence, optimize server load, rotations are handled on the client side as queues. Every 50 rotation (50 is adjustable to any number in the code), the rotations are synced with the server under a single request in the background and without involving the user or disturbing the flow of the game.
+  The other advantage is that in higher levels where the server takes a bit longer to respond, the user faces no lagging in rotations and doesn’t have to wait after each rotation they make to a cell.
+
+- The queued rotations are analyzed before syncing with the server and if one cell is rotated 4 times, which means it is back to its start position, its rotations are deleted. This further optimizes the requests sent to the server.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
