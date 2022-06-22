@@ -50,7 +50,7 @@ function PuzzleBody(): JSX.Element {
   return (
     <div className={`puzzle-body${stateBounceClassName} attempt-${puzzleRemainingValidationAttempt}`} onClick={(event:React. MouseEvent<HTMLElement>)=>buttonRotateHandler(event)}>
       <List
-        width={puzzleDataDimension[0]*40}
+        width={puzzleDataDimension[1]*40}
         height={height*40}
         rowRenderer={renderRow}
         rowCount={puzzleDataDimension[0]}
