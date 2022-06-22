@@ -1,7 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { IReduxState } from 'Redux-Manager/interfaces/puzzle.Interface';
 import { constants } from 'Utils/constants';
-import { puzzleCreated, puzzleDecreaseValidationAttempt, puzzleFailed, puzzleGameOver, puzzleLoading, puzzleNextLevelAvailability, puzzleNextLevelCreated, puzzleReturned, puzzleStarted, puzzleUpdated } from '../actions/puzzleActions';
+import { rotateCell } from 'Utils/helpers';
+import { puzzleCreated, puzzleDecreaseValidationAttempt, puzzleFailed, puzzleGameOver, puzzleLoading, puzzleNextLevelAvailability, puzzleNextLevelCreated, puzzleReturned, puzzleStarted, puzzleUpdated, puzzleVerifyEnabled } from '../actions/puzzleActions';
 
 
 
@@ -18,6 +19,7 @@ const puzzleInitialState: IReduxState = {
   puzzleWebSocket: undefined,
   puzzleRemainingValidationAttempt: constants.api.remainingVerifyAttemptCount,
   puzzleIsNextLevelAvailable: false,
+  puzzleVerifyEnable: true,
 };
 
 const puzzleReducer = createReducer(puzzleInitialState, (builder) => {
@@ -44,7 +46,9 @@ const puzzleReducer = createReducer(puzzleInitialState, (builder) => {
       state.puzzleWebSocket = action.payload.webSocket;
     })
     .addCase(puzzleUpdated, (state, action) => {
-      state.puzzleData = action.payload;
+      if(state.puzzleData){
+        state.puzzleData[action.payload.cellY][action.payload.cellX] = rotateCell(state.puzzleData[action.payload.cellY][action.payload.cellX]);
+      }
     })
     .addCase(puzzleDecreaseValidationAttempt, (state,) => {
       state.puzzleRemainingValidationAttempt = (state.puzzleRemainingValidationAttempt - 1);
@@ -55,6 +59,9 @@ const puzzleReducer = createReducer(puzzleInitialState, (builder) => {
     .addCase(puzzleNextLevelAvailability, (state, action) => {
       state.puzzleIsNextLevelAvailable = true;
       state.puzzleLevelPassword = (action.payload || '');
+    })
+    .addCase(puzzleVerifyEnabled, (state, action) => {
+      state.puzzleVerifyEnable = action.payload;
     })
     .addCase(puzzleNextLevelCreated, (state, action) => {
       state.puzzleIsWelcome = false;
@@ -72,3 +79,4 @@ export {
   puzzleInitialState,
   puzzleReducer,
 };
+

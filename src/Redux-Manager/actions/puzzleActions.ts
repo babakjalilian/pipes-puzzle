@@ -1,7 +1,8 @@
-
-import { IReduxActionTypes, IReduxActions, IPuzzleDispatch, Dispatch } from 'Redux-Manager/interfaces/puzzle.Interface';
 import { createAction } from '@reduxjs/toolkit';
+import { Dispatch, IPuzzleDispatch, IReduxActions, IReduxActionTypes } from 'Redux-Manager/interfaces/puzzle.Interface';
 import { IRotatePuzzle, Socket, TPuzzleData } from 'Services/Socket';
+import { constants } from 'Utils/constants';
+
 
 
 const rdxActionTypes: IReduxActionTypes = {
@@ -13,6 +14,7 @@ const rdxActionTypes: IReduxActionTypes = {
   PUZZLE_UPDATED: 'PUZZLE_UPDATED',
   PUZZLE_GAMEOVER: 'PUZZLE_GAMEOVER',
   PUZZLE_VALIDATIONATTEMPTDECREASED: 'PUZZLE_VALIDATIONATTEMPTDECREASED',
+  PUZZLE_VERIFYENABLED:'PUZZLE_VERIFYENABLED',
   PUZZLE_NEXTLEVELAVAILABLE: 'PUZZLE_NEXTLEVELAVAILABLE',
   PUZZLE_NEXTLEVELCREATED: 'PUZZLE_NEXTLEVELCREATED',
 };
@@ -35,10 +37,18 @@ const puzzleCreated = createAction(rdxActionTypes.PUZZLE_CREATED, (data: TPuzzle
   };
 });
 
-const puzzleUpdated = createAction<TPuzzleData | undefined>(rdxActionTypes.PUZZLE_UPDATED);
+const puzzleUpdated = createAction(rdxActionTypes.PUZZLE_UPDATED,(cellY:number, cellX:number)=>{
+  return {
+    payload: {
+      cellY,
+      cellX
+    }
+  };
+});
 
 const puzzleGameOver = createAction(rdxActionTypes.PUZZLE_GAMEOVER);
 
+const puzzleVerifyEnabled = createAction<boolean>(rdxActionTypes.PUZZLE_VERIFYENABLED);
 const puzzleDecreaseValidationAttempt = createAction(rdxActionTypes.PUZZLE_VALIDATIONATTEMPTDECREASED);
 
 const puzzleNextLevelAvailability = createAction<string | undefined>(rdxActionTypes.PUZZLE_NEXTLEVELAVAILABLE);
@@ -86,21 +96,28 @@ const rdxCreateWebSocketAndPuzzleAsync = (puzzleLevel: number): IPuzzleDispatch 
   }
 };
 
-const rdxrotatePuzzleCellAsync = ({ webSocket, cellX, cellY }: IRotatePuzzle): IPuzzleDispatch => async (dispatch: Dispatch<IReduxActions>) => {
+const rdxRotatePuzzleCellOnClient = ({ cellX, cellY }: IRotatePuzzle): IPuzzleDispatch => async (dispatch: Dispatch<IReduxActions>) => {
   try {
-    const puzzleData = await new Socket().rotatePuzzleCellAsync({ webSocket, cellX, cellY });
-    if (puzzleData) {
-      dispatch(puzzleUpdated(puzzleData));
-    } else {
-      throw new Error();
-    }
+    dispatch(puzzleUpdated(cellY, cellX));
   } catch (exception) {
     dispatch(puzzleFailed());
   }
 };
 
+const rdxRotatePuzzleCellsOnServer = (puzzleWebSocket:WebSocket,rotations:{[key:string]:string}): IPuzzleDispatch => async (dispatch: Dispatch<IReduxActions>) => {
+  const rotationQueue = Object.values(rotations).join('');
+  const numberOfRotations= rotationQueue.trim().split(' ').length / 2;
+  if(numberOfRotations === constants.api.syncRotationsWithServerLimit){
+    const response = await new Socket().rotatePuzzleCellsOnServer(puzzleWebSocket,rotationQueue);
+    if (response === null) {
+      dispatch(puzzleFailed());
+    } 
+  }
+};
+
 const rdxValidateExistingPuzzleAsync = (webSocket: WebSocket, puzzleLevel: number): IPuzzleDispatch => async (dispatch: Dispatch<IReduxActions>) => {
   try {
+    dispatch(puzzleVerifyEnabled(false));
     const validation = await new Socket().verifyPuzzleAsync(webSocket, puzzleLevel);
 
     // has an error
@@ -122,9 +139,10 @@ const rdxValidateExistingPuzzleAsync = (webSocket: WebSocket, puzzleLevel: numbe
     if (validation.isCorrect) {
       dispatch(puzzleNextLevelAvailability(validation.levelPassword));
     }
-
+    dispatch(puzzleVerifyEnabled(true));
   } catch (error) {
     dispatch(puzzleFailed());
+    dispatch(puzzleVerifyEnabled(true));
   }
 };
 
@@ -147,7 +165,8 @@ export {
   rdxActionTypes,
   rdxReturnToWelcomeAsync,
   rdxCreateWebSocketAndPuzzleAsync,
-  rdxrotatePuzzleCellAsync,
+  rdxRotatePuzzleCellOnClient,
+  rdxRotatePuzzleCellsOnServer,
   rdxValidateExistingPuzzleAsync,
   rdxgoToNextLevelAsync,
   puzzleStarted,
@@ -158,6 +177,8 @@ export {
   puzzleUpdated,
   puzzleDecreaseValidationAttempt,
   puzzleGameOver,
+  puzzleVerifyEnabled,
   puzzleNextLevelAvailability,
   puzzleNextLevelCreated
 };
+

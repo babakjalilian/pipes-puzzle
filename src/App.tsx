@@ -1,8 +1,8 @@
 
 
+import Game from 'Components/game/Game';
 import Layout from 'Components/layout/Layout';
-import Welcome from 'Components/pages/welcome/Welcome';
-import Game from 'Components/pages/game/Game';
+import Welcome from 'Components/welcome/Welcome';
 import { useSelector } from 'react-redux';
 import { IReduxState } from 'Redux-Manager/interfaces/puzzle.Interface';
 

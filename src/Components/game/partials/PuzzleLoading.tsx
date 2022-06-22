@@ -2,7 +2,7 @@ import { FiRotateCw as IconLoading } from 'react-icons/fi';
 import { messages } from 'Utils/constants';
 
 
-function GameLoading(): JSX.Element {
+function PuzzleLoading(): JSX.Element {
   return (
     <div className="puzzle puzzle-loading">
       <IconLoading className="icon loading-icon" />
@@ -11,4 +11,4 @@ function GameLoading(): JSX.Element {
   );
 }
 
-export default GameLoading;
+export default PuzzleLoading;

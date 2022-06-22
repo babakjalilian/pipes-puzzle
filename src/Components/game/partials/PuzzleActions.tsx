@@ -1,17 +1,18 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { FiCheckCircle as IconValidate, FiFrown as IconGiveUp } from 'react-icons/fi';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { rdxReturnToWelcomeAsync, rdxValidateExistingPuzzleAsync } from 'Redux-Manager/actions/puzzleActions';
+import { IReduxState } from 'Redux-Manager/interfaces/puzzle.Interface';
 import { messages } from 'Utils/constants';
 import { getWebSocketReadyStateDesc } from 'Utils/enumerations';
 
-import { rdxReturnToWelcomeAsync, rdxValidateExistingPuzzleAsync } from 'Redux-Manager/actions/puzzleActions';
-import { IReduxState } from 'Redux-Manager/interfaces/puzzle.Interface';
 
-function GameActions(): JSX.Element {
+
+function PuzzleActions(): JSX.Element {
   const dispatch = useDispatch();
   const puzzleRemainingValidationAttempt = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleRemainingValidationAttempt);
   const puzzleWebSocket = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleWebSocket);
   const puzzleLevel = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleLevel);
+  const puzzleVerifyEnable = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleVerifyEnable);
 
   const buttonValidateHandler = () => {
     if (puzzleWebSocket) {
@@ -31,7 +32,7 @@ function GameActions(): JSX.Element {
           <IconGiveUp className="action-icon" />
           <span>{messages.text.giveUp}</span>
         </button>
-        <button type="button" className="action-button action-validate" onClick={buttonValidateHandler}>
+        <button type="button" className="action-button action-validate" onClick={buttonValidateHandler} disabled={!puzzleVerifyEnable}>
           <IconValidate className="action-icon" />
           <span>{messages.text.check}</span>
         </button>
@@ -47,4 +48,4 @@ function GameActions(): JSX.Element {
   );
 }
 
-export default GameActions;
+export default PuzzleActions;

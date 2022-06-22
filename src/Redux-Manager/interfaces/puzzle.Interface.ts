@@ -16,6 +16,7 @@ export interface IReduxState {
   puzzleWebSocket?: WebSocket;
   puzzleRemainingValidationAttempt: number;
   puzzleIsNextLevelAvailable: boolean;
+  puzzleVerifyEnable: boolean;
   puzzleReducer?: any;
 }
 
@@ -28,6 +29,7 @@ export interface IReduxActionTypes {
   PUZZLE_UPDATED: string;
   PUZZLE_GAMEOVER: string;
   PUZZLE_VALIDATIONATTEMPTDECREASED: string;
+  PUZZLE_VERIFYENABLED: string;
   PUZZLE_NEXTLEVELAVAILABLE: string;
   PUZZLE_NEXTLEVELCREATED: string;
 }
