@@ -14,6 +14,7 @@ const rdxActionTypes: IReduxActionTypes = {
   PUZZLE_UPDATED: 'PUZZLE_UPDATED',
   PUZZLE_GAMEOVER: 'PUZZLE_GAMEOVER',
   PUZZLE_VALIDATIONATTEMPTDECREASED: 'PUZZLE_VALIDATIONATTEMPTDECREASED',
+  PUZZLE_VERIFYENABLED:'PUZZLE_VERIFYENABLED',
   PUZZLE_NEXTLEVELAVAILABLE: 'PUZZLE_NEXTLEVELAVAILABLE',
   PUZZLE_NEXTLEVELCREATED: 'PUZZLE_NEXTLEVELCREATED',
 };
@@ -47,6 +48,7 @@ const puzzleUpdated = createAction(rdxActionTypes.PUZZLE_UPDATED,(cellY:number, 
 
 const puzzleGameOver = createAction(rdxActionTypes.PUZZLE_GAMEOVER);
 
+const puzzleVerifyEnabled = createAction<boolean>(rdxActionTypes.PUZZLE_VERIFYENABLED);
 const puzzleDecreaseValidationAttempt = createAction(rdxActionTypes.PUZZLE_VALIDATIONATTEMPTDECREASED);
 
 const puzzleNextLevelAvailability = createAction<string | undefined>(rdxActionTypes.PUZZLE_NEXTLEVELAVAILABLE);
@@ -115,6 +117,7 @@ const rdxRotatePuzzleCellsOnServer = (puzzleWebSocket:WebSocket,rotations:{[key:
 
 const rdxValidateExistingPuzzleAsync = (webSocket: WebSocket, puzzleLevel: number): IPuzzleDispatch => async (dispatch: Dispatch<IReduxActions>) => {
   try {
+    dispatch(puzzleVerifyEnabled(false));
     const validation = await new Socket().verifyPuzzleAsync(webSocket, puzzleLevel);
 
     // has an error
@@ -136,9 +139,10 @@ const rdxValidateExistingPuzzleAsync = (webSocket: WebSocket, puzzleLevel: numbe
     if (validation.isCorrect) {
       dispatch(puzzleNextLevelAvailability(validation.levelPassword));
     }
-
+    dispatch(puzzleVerifyEnabled(true));
   } catch (error) {
     dispatch(puzzleFailed());
+    dispatch(puzzleVerifyEnabled(true));
   }
 };
 
@@ -173,6 +177,7 @@ export {
   puzzleUpdated,
   puzzleDecreaseValidationAttempt,
   puzzleGameOver,
+  puzzleVerifyEnabled,
   puzzleNextLevelAvailability,
   puzzleNextLevelCreated
 };

@@ -12,6 +12,7 @@ function PuzzleActions(): JSX.Element {
   const puzzleRemainingValidationAttempt = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleRemainingValidationAttempt);
   const puzzleWebSocket = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleWebSocket);
   const puzzleLevel = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleLevel);
+  const puzzleVerifyEnable = useSelector((state:IReduxState)=>state.puzzleReducer.puzzleVerifyEnable);
 
   const buttonValidateHandler = () => {
     if (puzzleWebSocket) {
@@ -31,7 +32,7 @@ function PuzzleActions(): JSX.Element {
           <IconGiveUp className="action-icon" />
           <span>{messages.text.giveUp}</span>
         </button>
-        <button type="button" className="action-button action-validate" onClick={buttonValidateHandler}>
+        <button type="button" className="action-button action-validate" onClick={buttonValidateHandler} disabled={!puzzleVerifyEnable}>
           <IconValidate className="action-icon" />
           <span>{messages.text.check}</span>
         </button>

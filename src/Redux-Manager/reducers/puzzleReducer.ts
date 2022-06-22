@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { IReduxState } from 'Redux-Manager/interfaces/puzzle.Interface';
 import { constants } from 'Utils/constants';
 import { rotateCell } from 'Utils/helpers';
-import { puzzleCreated, puzzleDecreaseValidationAttempt, puzzleFailed, puzzleGameOver, puzzleLoading, puzzleNextLevelAvailability, puzzleNextLevelCreated, puzzleReturned, puzzleStarted, puzzleUpdated } from '../actions/puzzleActions';
+import { puzzleCreated, puzzleDecreaseValidationAttempt, puzzleFailed, puzzleGameOver, puzzleLoading, puzzleNextLevelAvailability, puzzleNextLevelCreated, puzzleReturned, puzzleStarted, puzzleUpdated, puzzleVerifyEnabled } from '../actions/puzzleActions';
 
 
 
@@ -19,6 +19,7 @@ const puzzleInitialState: IReduxState = {
   puzzleWebSocket: undefined,
   puzzleRemainingValidationAttempt: constants.api.remainingVerifyAttemptCount,
   puzzleIsNextLevelAvailable: false,
+  puzzleVerifyEnable: true,
 };
 
 const puzzleReducer = createReducer(puzzleInitialState, (builder) => {
@@ -59,6 +60,9 @@ const puzzleReducer = createReducer(puzzleInitialState, (builder) => {
       state.puzzleIsNextLevelAvailable = true;
       state.puzzleLevelPassword = (action.payload || '');
     })
+    .addCase(puzzleVerifyEnabled, (state, action) => {
+      state.puzzleVerifyEnable = action.payload;
+    })
     .addCase(puzzleNextLevelCreated, (state, action) => {
       state.puzzleIsWelcome = false;
       state.puzzleIsStarted = true;
@@ -75,3 +79,4 @@ export {
   puzzleInitialState,
   puzzleReducer,
 };
+
