@@ -112,7 +112,7 @@ class Socket {
   verifyPuzzleAsync = async (webSocket: WebSocket, puzzleLevel: number): Promise<IVerifyPuzzle | null> => {
     try {
       if(Object.keys(this.rotations).length > 0) {
-        const rotationQueue= Object.values(this.rotations).join('');
+        const rotationQueue= Object.values(this.rotations).join('').replace('\n',' ');
         await this.rotatePuzzleCellsOnServer(webSocket, rotationQueue);
       }
       webSocket.send(constants.api.requestVerify);

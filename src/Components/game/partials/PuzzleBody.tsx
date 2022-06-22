@@ -40,7 +40,7 @@ function PuzzleBody(): JSX.Element {
       const [cellY,cellX]=target.id.split('_');
       if (puzzleWebSocket) {
         dispatch(rdxRotatePuzzleCellOnClient({ cellX: +cellX, cellY: +cellY }));
-        updateRotationQueue(` ${cellX} ${cellY}` , socketInstance.rotations);
+        updateRotationQueue(`${cellX} ${cellY}` , socketInstance.rotations);
         dispatch(rdxRotatePuzzleCellsOnServer(puzzleWebSocket,socketInstance.rotations));
       }
     }

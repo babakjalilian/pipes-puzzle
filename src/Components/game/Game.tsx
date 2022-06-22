@@ -39,7 +39,7 @@ function Game(): JSX.Element {
   }
 
   return (
-    <div className={`puzzle ${puzzleIsNextLevelAvailable ? 'puzzle-success' : ''} ${puzzleIsOver ? 'puzzle-failed' : ''}`}>
+    <div className={`puzzle${puzzleIsNextLevelAvailable ? ' puzzle-success' : ''}${puzzleIsOver ? ' puzzle-failed' : ''}`}>
       {puzzleIsOver && <GameOver />}
       {(!puzzleIsOver && !puzzleIsNextLevelAvailable) && <PuzzleActions />}
       {puzzleIsNextLevelAvailable && <PuzzleNextLevel />}

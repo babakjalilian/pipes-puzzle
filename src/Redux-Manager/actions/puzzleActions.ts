@@ -105,8 +105,8 @@ const rdxRotatePuzzleCellOnClient = ({ cellX, cellY }: IRotatePuzzle): IPuzzleDi
 };
 
 const rdxRotatePuzzleCellsOnServer = (puzzleWebSocket:WebSocket,rotations:{[key:string]:string}): IPuzzleDispatch => async (dispatch: Dispatch<IReduxActions>) => {
-  const rotationQueue = Object.values(rotations).join('');
-  const numberOfRotations= rotationQueue.trim().split(' ').length / 2;
+  const rotationQueue = Object.values(rotations).join('').replace('\n',' ');
+  const numberOfRotations= rotationQueue.trim().split('\n').length;
   if(numberOfRotations === constants.api.syncRotationsWithServerLimit){
     const response = await new Socket().rotatePuzzleCellsOnServer(puzzleWebSocket,rotationQueue);
     if (response === null) {

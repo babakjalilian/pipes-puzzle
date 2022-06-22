@@ -51,12 +51,12 @@ const rotateCell = (shape: string): string => {
 
 const updateRotationQueue=(rotationCoordinate:string,rotationQueue:{ [key: string]: string; }) : { [key: string]: string; }=>{
   if(rotationQueue[rotationCoordinate]) {
-    rotationQueue[rotationCoordinate] = rotationQueue[rotationCoordinate].concat(`${rotationCoordinate}`);
+    rotationQueue[rotationCoordinate] = rotationQueue[rotationCoordinate].concat(`\n${rotationCoordinate}`);
   } else {
-    rotationQueue[rotationCoordinate]=`${rotationCoordinate}`;
+    rotationQueue[rotationCoordinate]=`\n${rotationCoordinate}`;
   }
 
-  const numberOfRotations=rotationQueue[rotationCoordinate].trim().split(' ').length / 2;
+  const numberOfRotations=rotationQueue[rotationCoordinate].trim().split('\n').length;
   if(numberOfRotations===4) {
     delete rotationQueue[rotationCoordinate];
   }
