@@ -2,7 +2,7 @@
 
 <br />
 <div align="center">
-  <a href="https://github.com/babakjalilian/Read_Me_Test">
+  <a href="https://github.com/babakjalilian/pipes-puzzle">
     <img src="public/maze.svg" alt="Logo" width="80" height="80">
   </a>
 
@@ -13,9 +13,9 @@
     <br />
     <a href="https://babakjalilian.github.io/pipes-puzzle/">View Demo</a>
     ·
-    <a href="https://github.com/babakjalilian/Read_Me_Test/issues">Report Bug</a>
+    <a href="https://github.com/babakjalilian/pipes-puzzle/issues">Report Bug</a>
     ·
-    <a href="https://github.com/babakjalilian/Read_Me_Test/issues">Request Feature</a>
+    <a href="https://github.com/babakjalilian/pipes-puzzle/issues">Request Feature</a>
   </p>
 </div>
 
@@ -83,7 +83,7 @@ We use [npm](https://www.npmjs.com/) to manage the dependencies, so we recommend
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/babakjalilian/Read_Me_Test.gitaa
+   git clone https://github.com/babakjalilian/pipes-puzzle/
    ```
 2. Navigate into the local repository and install NPM packages (might take a few minutes).
 
